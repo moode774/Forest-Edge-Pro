@@ -1,0 +1,61 @@
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './src/pages/Login';
+import Dashboard from './src/pages/Dashboard';
+import Editor from './src/pages/Editor';
+import Maintenance from './src/pages/Maintenance';
+import Home from './src/pages/Home';
+import History from './src/pages/History';
+import Settings from './src/pages/Settings';
+import { db } from './firebase';
+import { doc, onSnapshot } from 'firebase/firestore';
+import { LanguageProvider } from './src/context/LanguageContext';
+
+export default function App() {
+  const [isMaintenance, setIsMaintenance] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Listen to system settings for kill switch
+    const unsub = onSnapshot(doc(db, 'settings', 'system'), (doc) => {
+      if (doc.exists()) {
+        setIsMaintenance(doc.data().isMaintenanceMode || false);
+      }
+      setLoading(false);
+    }, (error) => {
+      console.error("Error listening to system status:", error);
+      setLoading(false);
+    });
+
+    return () => unsub();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-900 flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (isMaintenance) {
+    return <Maintenance />;
+  }
+
+  return (
+    <LanguageProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/editor" element={<Editor />} />
+          <Route path="/editor" element={<Editor />} />
+          <Route path="/editor/:id" element={<Editor />} />
+          <Route path="/settings" element={<Settings />} />
+        </Routes>
+      </Router>
+    </LanguageProvider>
+  );
+}

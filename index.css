@@ -1,0 +1,83 @@
+/* Print Styles for Professional Submittal Form */
+
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-container {
+    padding: 0 !important;
+    background: white !important;
+    overflow: visible !important;
+  }
+
+  .print-only {
+    box-shadow: none !important;
+    page-break-after: auto;
+    page-break-inside: avoid;
+  }
+
+  /* Ensure images print correctly */
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  /* Prevent page breaks in important sections */
+  table, .certification-section, .images-section {
+    page-break-inside: avoid;
+  }
+
+  /* Border colors */
+  .border, [class*="border-"] {
+    border-color: #000 !important;
+  }
+}
+
+/* Custom scrollbar for editor panel */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 8px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Smooth transitions */
+* {
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Focus visible styles */
+input:focus-visible,
+textarea:focus-visible,
+button:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
