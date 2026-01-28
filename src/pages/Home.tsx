@@ -51,6 +51,13 @@ export default function ForestEdgeDashboard() {
             stat: "Live"
         },
         {
+            title: t('home.veneerTitle', 'Materials'),
+            subtitle: t('home.veneerDesc', 'Veneer Library'),
+            icon: <Database strokeWidth={1.5} size={28} />, // Reusing icon for now, or could import another
+            path: "/veneers",
+            stat: "Veneers"
+        },
+        {
             title: t('home.settingsTitle', 'Settings'),
             subtitle: t('home.settingsDesc', 'Configuration'),
             icon: <Settings strokeWidth={1.5} size={28} />,
@@ -68,7 +75,7 @@ export default function ForestEdgeDashboard() {
             {/* --- Navbar (Fixed & Glassy) --- */}
             <nav className="fixed top-0 w-full z-40 bg-[#FDFDFB]/80 backdrop-blur-xl border-b border-gray-100 h-24 transition-all">
                 <div className="max-w-[1600px] mx-auto px-8 h-full flex justify-between items-center">
-                    
+
                     {/* Brand */}
                     <div className="flex items-center gap-4 cursor-pointer" onClick={() => navigate('/')}>
                         <div className="w-10 h-10 bg-[#1c1917] text-white flex items-center justify-center rounded-xl shadow-lg shadow-black/10">
@@ -86,14 +93,14 @@ export default function ForestEdgeDashboard() {
 
                     {/* Right Side Actions */}
                     <div className="flex items-center gap-6">
-                        
+
                         {/* Search Pill */}
                         <div className="hidden lg:flex items-center gap-3 bg-white border border-gray-200 px-4 py-2.5 rounded-full w-72 shadow-sm hover:border-gray-300 transition-all group">
                             <Search size={14} className="text-gray-400 group-hover:text-black transition-colors" />
-                            <input 
-                                type="text" 
-                                placeholder="Type to search..." 
-                                className="bg-transparent border-none outline-none text-xs font-medium w-full placeholder:text-gray-400" 
+                            <input
+                                type="text"
+                                placeholder="Type to search..."
+                                className="bg-transparent border-none outline-none text-xs font-medium w-full placeholder:text-gray-400"
                             />
                             <div className="px-1.5 py-0.5 bg-gray-100 rounded text-[9px] font-bold text-gray-400 border border-gray-200">⌘K</div>
                         </div>
@@ -120,7 +127,7 @@ export default function ForestEdgeDashboard() {
                         </div>
 
                         {/* Logout Button */}
-                        <button 
+                        <button
                             onClick={() => setShowLogoutConfirm(true)}
                             className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-400 hover:border-red-200 hover:bg-red-50 hover:text-red-500 transition-all ml-2"
                             title="Sign Out"
@@ -183,7 +190,7 @@ export default function ForestEdgeDashboard() {
                                 <p className="text-sm text-gray-400 font-medium leading-relaxed mb-6">
                                     {item.subtitle}
                                 </p>
-                                
+
                                 <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-[#1c1917] border-t border-gray-100 pt-6 group-hover:border-[#1c1917] transition-colors duration-500">
                                     <span>Open Module</span>
                                     <ArrowUpRight size={14} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
@@ -202,14 +209,14 @@ export default function ForestEdgeDashboard() {
             {showLogoutConfirm && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
                     {/* Backdrop with Blur */}
-                    <div 
+                    <div
                         className="absolute inset-0 bg-[#1c1917]/20 backdrop-blur-md transition-opacity duration-300"
                         onClick={() => setShowLogoutConfirm(false)}
                     ></div>
 
                     {/* Modal Content */}
                     <div className="relative bg-white rounded-[32px] p-8 md:p-12 max-w-md w-full shadow-2xl shadow-black/20 transform scale-100 animate-fade-in-up border border-gray-100">
-                        <button 
+                        <button
                             onClick={() => setShowLogoutConfirm(false)}
                             className="absolute top-6 right-6 text-gray-400 hover:text-[#1c1917] transition-colors"
                         >
@@ -224,19 +231,19 @@ export default function ForestEdgeDashboard() {
                             {isRTL ? 'تسجيل الخروج؟' : 'End Session?'}
                         </h3>
                         <p className="text-gray-500 mb-8 leading-relaxed">
-                            {isRTL 
-                                ? 'أنت على وشك إنهاء الجلسة الآمنة. سيتم حفظ جميع البيانات تلقائياً.' 
+                            {isRTL
+                                ? 'أنت على وشك إنهاء الجلسة الآمنة. سيتم حفظ جميع البيانات تلقائياً.'
                                 : 'You are about to terminate your secure session. All unsaved changes are automatically synced.'}
                         </p>
 
                         <div className="flex gap-4">
-                            <button 
+                            <button
                                 onClick={() => setShowLogoutConfirm(false)}
                                 className="flex-1 py-4 rounded-xl border border-gray-200 font-bold text-xs uppercase tracking-widest hover:bg-gray-50 transition-colors text-[#1c1917]"
                             >
                                 {t('common.cancel', 'Cancel')}
                             </button>
-                            <button 
+                            <button
                                 onClick={handleLogout}
                                 className="flex-1 py-4 rounded-xl bg-[#1c1917] text-white font-bold text-xs uppercase tracking-widest hover:bg-black hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-black/10"
                             >

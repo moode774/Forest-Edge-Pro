@@ -6,6 +6,7 @@ import Editor from './src/pages/Editor';
 import Maintenance from './src/pages/Maintenance';
 import Home from './src/pages/Home';
 import History from './src/pages/History';
+import VeneerManager from './src/pages/VeneerManager';
 import Settings from './src/pages/Settings';
 import { db } from './firebase';
 import { doc, onSnapshot } from 'firebase/firestore';
@@ -53,6 +54,7 @@ export default function App() {
           <Route path="/editor" element={<Editor />} />
           <Route path="/editor" element={<Editor />} />
           <Route path="/editor/:id" element={<Editor />} />
+          <Route path="/veneers" element={<VeneerManager />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </Router>
