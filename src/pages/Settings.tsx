@@ -1,49 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import { 
-    ArrowLeft, 
-    Globe, 
-    Shield, 
-    Smartphone, 
-    Bell, 
-    Moon, 
-    Server, 
+import { useTheme } from '../context/ThemeContext';
+import {
+    ArrowLeft,
+    Globe,
+    Shield,
+    Smartphone,
+    Bell,
+    Moon,
+    Sun,
+    Server,
     CheckCircle2,
-    ChevronRight 
+    ChevronRight
 } from 'lucide-react';
 
 export default function Settings() {
     const navigate = useNavigate();
     const { t, isRTL, language, setLanguage } = useLanguage();
+    const { theme, toggleTheme, isDark } = useTheme();
 
     // مكون فرعي لزر التبديل (Toggle Switch) لإضافة لمسة واقعية
-    const ToggleItem = ({ icon, title, desc, active = false }) => (
-        <div className="flex items-center justify-between p-4 border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors cursor-pointer group">
+    const ToggleItem = ({ icon, title, desc, active = false, onClick = () => { } }) => (
+        <div
+            onClick={onClick}
+            className="flex items-center justify-between p-4 border-b border-gray-100 dark:border-gray-700 last:border-0 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer group"
+        >
             <div className="flex items-center gap-4">
-                <div className="text-gray-400 group-hover:text-[#1c1917] transition-colors">
+                <div className="text-gray-400 dark:text-gray-500 group-hover:text-[#1c1917] dark:group-hover:text-white transition-colors">
                     {icon}
                 </div>
                 <div>
-                    <h4 className="text-sm font-serif font-medium text-[#1c1917]">{title}</h4>
-                    <p className="text-[10px] text-gray-400 uppercase tracking-wider">{desc}</p>
+                    <h4 className="text-sm font-serif font-medium text-[#1c1917] dark:text-white">{title}</h4>
+                    <p className="text-[10px] text-gray-400 dark:text-gray-500 uppercase tracking-wider">{desc}</p>
                 </div>
             </div>
-            <div className={`w-10 h-5 rounded-full relative transition-colors ${active ? 'bg-[#1c1917]' : 'bg-gray-200'}`}>
-                <div className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-all ${active ? (isRTL ? 'left-1' : 'right-1') : (isRTL ? 'right-1' : 'left-1')}`} />
+            <div className={`w-10 h-5 rounded-full relative transition-colors ${active ? 'bg-[#1c1917] dark:bg-white' : 'bg-gray-200 dark:bg-gray-600'}`}>
+                <div className={`absolute top-1 w-3 h-3 rounded-full transition-all ${active ? 'bg-white dark:bg-[#1c1917]' : 'bg-white dark:bg-gray-400'} ${active ? (isRTL ? 'left-1' : 'right-1') : (isRTL ? 'right-1' : 'left-1')}`} />
             </div>
         </div>
     );
 
     return (
-        <div className={`min-h-screen bg-[#FDFDFB] text-[#1c1917] font-sans selection:bg-[#E7E5E4] ${isRTL ? 'rtl' : 'ltr'}`} dir={isRTL ? 'rtl' : 'ltr'}>
-            
+        <div className={`min-h-screen bg-[#FDFDFB] dark:bg-[#1c1917] text-[#1c1917] dark:text-white font-sans selection:bg-[#E7E5E4] dark:selection:bg-gray-700 transition-colors ${isRTL ? 'rtl' : 'ltr'}`} dir={isRTL ? 'rtl' : 'ltr'}>
+
             <main className="max-w-5xl mx-auto px-6 py-12">
 
                 {/* --- Header --- */}
                 <div className="flex items-end justify-between mb-16">
                     <div className="flex items-center gap-6">
-                        <button 
+                        <button
                             onClick={() => navigate('/home')}
                             className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-[#1c1917] hover:text-white hover:border-[#1c1917] transition-all duration-300 group"
                         >
@@ -61,35 +67,35 @@ export default function Settings() {
 
                     {/* Left Column: Language & System (Width: 7/12) */}
                     <div className="lg:col-span-7 space-y-8">
-                        
+
                         {/* 1. Language Selector */}
                         <section>
-                            <h2 className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6 flex items-center gap-2">
-                                <Globe size={14} /> {t('common.language', 'Interface Language')}
+                            <h2 className="text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-6 flex items-center gap-2">
+                                <Globe size={14} /> {t('settings.language')}
                             </h2>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 {/* English Option */}
-                                <button 
+                                <button
                                     onClick={() => setLanguage('en')}
-                                    className={`relative p-6 rounded-xl border flex items-start gap-4 text-left transition-all duration-300 ${language === 'en' ? 'bg-[#1c1917] text-white border-[#1c1917] shadow-xl' : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300'}`}
+                                    className={`relative p-6 rounded-xl border flex items-start gap-4 text-left transition-all duration-300 ${language === 'en' ? 'bg-[#1c1917] dark:bg-white text-white dark:text-[#1c1917] border-[#1c1917] dark:border-white shadow-xl' : 'bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'}`}
                                 >
                                     <span className="text-lg font-serif">Aa</span>
                                     <div>
-                                        <h3 className="font-bold tracking-wide">English</h3>
-                                        <p className={`text-xs mt-1 ${language === 'en' ? 'text-gray-400' : 'text-gray-300'}`}>Default layout</p>
+                                        <h3 className="font-bold tracking-wide">{t('settings.english')}</h3>
+                                        <p className={`text-xs mt-1 ${language === 'en' ? 'text-gray-400 dark:text-gray-600' : 'text-gray-300 dark:text-gray-500'}`}>{t('settings.defaultLayout')}</p>
                                     </div>
                                     {language === 'en' && <CheckCircle2 size={18} className="absolute top-6 right-6 text-emerald-500" />}
                                 </button>
 
                                 {/* Arabic Option */}
-                                <button 
+                                <button
                                     onClick={() => setLanguage('ar')}
-                                    className={`relative p-6 rounded-xl border flex items-start gap-4 text-left transition-all duration-300 ${language === 'ar' ? 'bg-[#1c1917] text-white border-[#1c1917] shadow-xl' : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300'}`}
+                                    className={`relative p-6 rounded-xl border flex items-start gap-4 text-left transition-all duration-300 ${language === 'ar' ? 'bg-[#1c1917] dark:bg-white text-white dark:text-[#1c1917] border-[#1c1917] dark:border-white shadow-xl' : 'bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'}`}
                                 >
                                     <span className="text-lg font-serif">ض</span>
                                     <div>
-                                        <h3 className="font-bold tracking-wide">العربية</h3>
-                                        <p className={`text-xs mt-1 ${language === 'ar' ? 'text-gray-400' : 'text-gray-300'}`}>RTL layout</p>
+                                        <h3 className="font-bold tracking-wide">{t('settings.arabic')}</h3>
+                                        <p className={`text-xs mt-1 ${language === 'ar' ? 'text-gray-400 dark:text-gray-600' : 'text-gray-300 dark:text-gray-500'}`}>{t('settings.rtlLayout')}</p>
                                     </div>
                                     {language === 'ar' && <CheckCircle2 size={18} className="absolute top-6 right-6 text-emerald-500" />}
                                 </button>
@@ -97,26 +103,26 @@ export default function Settings() {
                         </section>
 
                         {/* 2. General Preferences (Toggle List) */}
-                        <section className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
-                            <div className="px-6 py-4 bg-gray-50/50 border-b border-gray-200">
-                                <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500">Workspace Preferences</h3>
+                        <section className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm">
+                            <div className="px-6 py-4 bg-gray-50/50 dark:bg-gray-700/50 border-b border-gray-200 dark:border-gray-700">
+                                <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400">{t('settings.preferences')}</h3>
                             </div>
                             <div>
-                                <ToggleItem icon={<Bell size={18} />} title="Notifications" desc="Email alerts for new submittals" active={true} />
-                                <ToggleItem icon={<Moon size={18} />} title="Dark Mode" desc="Override system appearance" active={false} />
-                                <ToggleItem icon={<Smartphone size={18} />} title="Responsive Layout" desc="Optimize for mobile devices" active={true} />
+                                <ToggleItem icon={<Bell size={18} />} title={t('settings.notifications')} desc={t('settings.notificationsDesc')} active={true} onClick={() => { }} />
+
+                                <ToggleItem icon={<Smartphone size={18} />} title={t('settings.responsiveLayout')} desc={t('settings.responsiveDesc')} active={true} onClick={() => { }} />
                             </div>
                         </section>
                     </div>
 
                     {/* Right Column: System Status (Width: 5/12) */}
                     <div className="lg:col-span-5 space-y-8">
-                        
+
                         {/* System Identity Card */}
                         <div className="bg-[#1c1917] text-white p-8 rounded-2xl relative overflow-hidden shadow-2xl">
                             {/* Texture */}
                             <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-gray-500 to-transparent pointer-events-none" />
-                            
+
                             <div className="relative z-10 flex flex-col h-full justify-between gap-12">
                                 <div className="flex justify-between items-start">
                                     <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center backdrop-blur-sm">
@@ -130,7 +136,7 @@ export default function Settings() {
                                 <div>
                                     <h3 className="text-2xl font-serif mb-1">Forest Edge</h3>
                                     <p className="text-gray-400 text-xs uppercase tracking-widest">Enterprise Edition</p>
-                                    
+
                                     <div className="mt-8 pt-8 border-t border-white/10 space-y-3">
                                         <div className="flex justify-between text-sm font-mono text-gray-400">
                                             <span>Version</span>
@@ -153,13 +159,13 @@ export default function Settings() {
                         </div>
 
                         {/* Account Brief */}
-                        <div className="bg-white p-6 rounded-2xl border border-gray-200 flex items-center justify-between group hover:border-[#1c1917] transition-colors cursor-pointer">
+                        <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-200 dark:border-gray-700 flex items-center justify-between group hover:border-[#1c1917] dark:hover:border-white transition-colors cursor-pointer">
                             <div>
-                                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Current User</p>
-                                <h3 className="font-serif text-lg">Mohamed Abed</h3>
-                                <p className="text-xs text-gray-500 font-mono">ID: ADMIN-8821</p>
+                                <p className="text-[10px] text-gray-400 dark:text-gray-500 font-bold uppercase tracking-widest mb-1">{t('settings.currentUser')}</p>
+                                <h3 className="font-serif text-lg text-[#1c1917] dark:text-white">Mohamed Abed</h3>
+                                <p className="text-xs text-gray-500 dark:text-gray-400 font-mono">{t('settings.userId')}: ADMIN-8821</p>
                             </div>
-                            <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-[#1c1917] group-hover:text-white transition-all">
+                            <div className="w-10 h-10 rounded-full bg-gray-50 dark:bg-gray-700 flex items-center justify-center text-gray-400 dark:text-gray-500 group-hover:bg-[#1c1917] dark:group-hover:bg-white group-hover:text-white dark:group-hover:text-[#1c1917] transition-all">
                                 <ChevronRight size={18} className={isRTL ? 'rotate-180' : ''} />
                             </div>
                         </div>

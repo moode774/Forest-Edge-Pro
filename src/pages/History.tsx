@@ -18,7 +18,7 @@ import { useLanguage } from '../context/LanguageContext';
 export default function Registry() {
     const navigate = useNavigate();
     const { t, isRTL } = useLanguage();
-    
+
     // States
     const [submittals, setSubmittals] = useState<any[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -59,10 +59,10 @@ export default function Registry() {
 
     // Advanced Filtering Logic
     const filteredSubmittals = submittals.filter(item => {
-        const matchesSearch = 
-            item.submittalNo?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        const matchesSearch =
+            item.submittalNo?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item.projectTitle?.toLowerCase().includes(searchTerm.toLowerCase());
-        
+
         // افتراض وجود حقل status، إذا لم يوجد نعرض الكل (يمكنك تعديل المنطق حسب الداتا بيس)
         const matchesFilter = filterStatus === 'all' ? true : (item.status === filterStatus);
 
@@ -70,36 +70,36 @@ export default function Registry() {
     });
 
     return (
-        <div className={`min-h-screen bg-[#FDFDFB] text-[#1c1917] font-sans selection:bg-[#E7E5E4] pb-20 ${isRTL ? 'rtl' : 'ltr'}`} dir={isRTL ? 'rtl' : 'ltr'}>
-            
+        <div className={`min-h-screen bg-[#FDFDFB] dark:bg-[#1c1917] text-[#1c1917] dark:text-white font-sans selection:bg-[#E7E5E4] dark:selection:bg-gray-700 pb-20 transition-colors ${isRTL ? 'rtl' : 'ltr'}`} dir={isRTL ? 'rtl' : 'ltr'}>
+
             {/* --- Header & Navigation --- */}
-            <header className="sticky top-0 z-20 bg-[#FDFDFB]/90 backdrop-blur-md border-b border-gray-100 transition-all">
+            <header className="sticky top-0 z-20 bg-[#FDFDFB]/90 dark:bg-[#1c1917]/90 backdrop-blur-md border-b border-gray-100 dark:border-gray-700 transition-all">
                 <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-                    
+
                     <div className="flex items-center gap-6">
-                        <button 
+                        <button
                             onClick={() => navigate('/home')}
-                            className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:border-black hover:text-black hover:scale-105 transition-all"
+                            className="w-10 h-10 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white hover:scale-105 transition-all"
                         >
                             <ArrowLeft size={18} />
                         </button>
                         <div>
-                            <h1 className="text-xl font-serif font-bold tracking-wide text-[#1c1917]">Registry</h1>
-                            <p className="text-[10px] text-gray-400 uppercase tracking-widest font-mono">Operational Archives</p>
+                            <h1 className="text-xl font-serif font-bold tracking-wide text-[#1c1917] dark:text-white">{t('registry.title')}</h1>
+                            <p className="text-[10px] text-gray-400 dark:text-gray-500 uppercase tracking-widest font-mono">{t('registry.subtext')}</p>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-4">
-                        <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-gray-50 rounded-lg border border-gray-100">
-                             <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-                             <span className="text-[10px] font-bold tracking-wider text-gray-500 uppercase">{submittals.length} ENTRIES</span>
+                        <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-100 dark:border-gray-700">
+                            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                            <span className="text-[10px] font-bold tracking-wider text-gray-500 dark:text-gray-400 uppercase">{submittals.length} {t('common.results', 'ENTRIES')}</span>
                         </div>
                         <button
                             onClick={() => navigate('/editor')}
-                            className="flex items-center gap-2 bg-[#1c1917] text-white px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-black transition-all shadow-lg shadow-gray-200"
+                            className="flex items-center gap-2 bg-[#1c1917] dark:bg-white text-white dark:text-[#1c1917] px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-black dark:hover:bg-gray-100 transition-all shadow-lg shadow-gray-200 dark:shadow-none"
                         >
                             <Plus size={16} />
-                            <span className="hidden sm:inline">{t('registry.initiate', 'New Entry')}</span>
+                            <span className="hidden sm:inline">{t('registry.initiate')}</span>
                         </button>
                     </div>
                 </div>
@@ -109,33 +109,32 @@ export default function Registry() {
 
                 {/* --- Search & Filter Toolbar --- */}
                 <div className="mb-8 flex flex-col md:flex-row justify-between items-end gap-6">
-                    
+
                     {/* Search Field (Minimalist Line) */}
                     <div className="w-full md:w-1/2 relative group">
-                        <Search size={18} className={`absolute bottom-3 ${isRTL ? 'right-0' : 'left-0'} text-gray-400 group-focus-within:text-black transition-colors`} />
+                        <Search size={18} className={`absolute bottom-3 ${isRTL ? 'right-0' : 'left-0'} text-gray-400 dark:text-gray-500 group-focus-within:text-black dark:group-focus-within:text-white transition-colors`} />
                         <input
                             type="text"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            placeholder={t('registry.searchPlaceholder', 'Search by ID or Project Title...')}
-                            className={`w-full bg-transparent border-b border-gray-200 py-3 ${isRTL ? 'pr-8' : 'pl-8'} text-lg font-serif placeholder:font-sans placeholder:text-gray-300 focus:outline-none focus:border-black transition-all`}
+                            placeholder={t('registry.searchPlaceholder')}
+                            className={`w-full bg-transparent border-b border-gray-200 dark:border-gray-700 py-3 ${isRTL ? 'pr-8' : 'pl-8'} text-lg font-serif placeholder:font-sans placeholder:text-gray-300 dark:placeholder:text-gray-600 focus:outline-none focus:border-black dark:focus:border-white transition-all text-[#1c1917] dark:text-white`}
                         />
                     </div>
 
                     {/* Filter Pills */}
                     <div className="flex items-center gap-2 overflow-x-auto pb-1">
-                        <Filter size={16} className="text-gray-400 mx-2" />
+                        <Filter size={16} className="text-gray-400 dark:text-gray-500 mx-2" />
                         {['all', 'draft', 'submitted'].map((status) => (
                             <button
                                 key={status}
                                 onClick={() => setFilterStatus(status)}
-                                className={`px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest border transition-all ${
-                                    filterStatus === status 
-                                    ? 'bg-[#1c1917] text-white border-[#1c1917]' 
-                                    : 'bg-white text-gray-400 border-gray-200 hover:border-gray-400 hover:text-gray-600'
-                                }`}
+                                className={`px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest border transition-all ${filterStatus === status
+                                        ? 'bg-[#1c1917] dark:bg-white text-white dark:text-[#1c1917] border-[#1c1917] dark:border-white'
+                                        : 'bg-white dark:bg-gray-800 text-gray-400 dark:text-gray-500 border-gray-200 dark:border-gray-700 hover:border-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
+                                    }`}
                             >
-                                {status}
+                                {status.toUpperCase()}
                             </button>
                         ))}
                     </div>
@@ -144,42 +143,42 @@ export default function Registry() {
                 {/* --- The Registry List (Elegant Rows) --- */}
                 <div className="space-y-3 min-h-[400px]">
                     {loading ? (
-                         <div className="space-y-4">
-                             {[1,2,3,4].map(i => <div key={i} className="h-20 bg-gray-50 rounded-xl animate-pulse" />)}
-                         </div>
+                        <div className="space-y-4">
+                            {[1, 2, 3, 4].map(i => <div key={i} className="h-20 bg-gray-50 dark:bg-gray-800 rounded-xl animate-pulse" />)}
+                        </div>
                     ) : filteredSubmittals.length > 0 ? (
                         filteredSubmittals.map((item) => (
                             <div
                                 key={item.id}
                                 onClick={() => navigate(`/editor/${item.id}`)}
-                                className="group relative bg-white rounded-xl border border-gray-100 p-5 flex items-center justify-between hover:border-gray-300 hover:shadow-xl hover:shadow-gray-100 transition-all duration-300 cursor-pointer overflow-hidden"
+                                className="group relative bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 p-5 flex items-center justify-between hover:border-gray-300 dark:hover:border-gray-500 hover:shadow-xl hover:shadow-gray-100 dark:hover:shadow-black/20 transition-all duration-300 cursor-pointer overflow-hidden"
                             >
                                 {/* Active Indicator Strip */}
-                                <div className={`absolute top-0 bottom-0 w-1 bg-[#1c1917] transition-all duration-300 ${isRTL ? 'right-0 opacity-0 group-hover:opacity-100' : 'left-0 opacity-0 group-hover:opacity-100'}`} />
+                                <div className={`absolute top-0 bottom-0 w-1 bg-[#1c1917] dark:bg-white transition-all duration-300 ${isRTL ? 'right-0 opacity-0 group-hover:opacity-100' : 'left-0 opacity-0 group-hover:opacity-100'}`} />
 
                                 <div className="flex items-center gap-6 md:gap-8 flex-1">
                                     {/* Icon Box */}
-                                    <div className="w-12 h-12 rounded-lg bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-[#1c1917] group-hover:text-white transition-colors duration-300">
+                                    <div className="w-12 h-12 rounded-lg bg-gray-50 dark:bg-gray-700 flex items-center justify-center text-gray-400 dark:text-gray-500 group-hover:bg-[#1c1917] dark:group-hover:bg-white group-hover:text-white dark:group-hover:text-[#1c1917] transition-colors duration-300">
                                         <FileText size={20} strokeWidth={1.5} />
                                     </div>
 
                                     {/* Main Info */}
                                     <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-8 flex-1">
                                         <div className="min-w-[120px]">
-                                            <span className="block text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">ID Ref</span>
-                                            <h3 className="font-mono text-sm font-medium text-[#1c1917]">{item.submittalNo}</h3>
+                                            <span className="block text-[10px] text-gray-400 dark:text-gray-500 font-bold uppercase tracking-widest mb-1">{t('editor.submittalNo', 'ID Ref')}</span>
+                                            <h3 className="font-mono text-sm font-medium text-[#1c1917] dark:text-white">{item.submittalNo}</h3>
                                         </div>
 
                                         <div className="flex-1">
-                                            <span className="block text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Project</span>
-                                            <h3 className="font-serif text-lg text-[#1c1917] truncate max-w-md group-hover:text-emerald-700 transition-colors">
+                                            <span className="block text-[10px] text-gray-400 dark:text-gray-500 font-bold uppercase tracking-widest mb-1">{t('editor.projectTitle', 'Project')}</span>
+                                            <h3 className="font-serif text-lg text-[#1c1917] dark:text-white truncate max-w-md group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors">
                                                 {item.projectTitle}
                                             </h3>
                                         </div>
 
                                         <div className="hidden sm:block min-w-[120px]">
-                                            <span className="block text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Date Logged</span>
-                                            <div className="flex items-center gap-2 text-gray-500 text-sm font-mono">
+                                            <span className="block text-[10px] text-gray-400 dark:text-gray-500 font-bold uppercase tracking-widest mb-1">{t('editor.date', 'Date Logged')}</span>
+                                            <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400 text-sm font-mono">
                                                 <Calendar size={12} />
                                                 {item.date}
                                             </div>
@@ -203,12 +202,12 @@ export default function Registry() {
                             </div>
                         ))
                     ) : (
-                        <div className="flex flex-col items-center justify-center py-24 text-center border border-dashed border-gray-200 rounded-2xl bg-gray-50/30">
-                            <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm mb-4">
-                                <MoreHorizontal size={24} className="text-gray-300" />
+                        <div className="flex flex-col items-center justify-center py-24 text-center border border-dashed border-gray-200 dark:border-gray-700 rounded-2xl bg-gray-50/30 dark:bg-gray-800/30">
+                            <div className="w-16 h-16 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center shadow-sm mb-4">
+                                <MoreHorizontal size={24} className="text-gray-300 dark:text-gray-600" />
                             </div>
-                            <h3 className="font-serif text-xl text-[#1c1917] mb-2">Registry is Empty</h3>
-                            <p className="text-gray-400 text-sm max-w-xs mx-auto">No records match your criteria. Start by initiating a new entry.</p>
+                            <h3 className="font-serif text-xl text-[#1c1917] dark:text-white mb-2">{t('registry.empty')}</h3>
+                            <p className="text-gray-400 dark:text-gray-500 text-sm max-w-xs mx-auto">{t('registry.emptyDesc')}</p>
                         </div>
                     )}
                 </div>

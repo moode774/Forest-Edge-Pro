@@ -11,8 +11,9 @@ import Settings from './src/pages/Settings';
 import { db } from './firebase';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { LanguageProvider } from './src/context/LanguageContext';
+import { ThemeProvider } from './src/context/ThemeContext';
 
-export default function App() {
+function AppContent() {
   const [isMaintenance, setIsMaintenance] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -33,8 +34,8 @@ export default function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-900 flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      <div className="min-h-screen bg-[#FDFDFB] dark:bg-[#1c1917] flex items-center justify-center transition-colors">
+        <div className="w-12 h-12 border-4 border-[#1c1917] dark:border-white border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -44,20 +45,27 @@ export default function App() {
   }
 
   return (
-    <LanguageProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/history" element={<History />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/editor" element={<Editor />} />
-          <Route path="/editor" element={<Editor />} />
-          <Route path="/editor/:id" element={<Editor />} />
-          <Route path="/veneers" element={<VeneerManager />} />
-          <Route path="/settings" element={<Settings />} />
-        </Routes>
-      </Router>
-    </LanguageProvider>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/history" element={<History />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/editor" element={<Editor />} />
+        <Route path="/editor/:id" element={<Editor />} />
+        <Route path="/veneers" element={<VeneerManager />} />
+        <Route path="/settings" element={<Settings />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <LanguageProvider>
+        <AppContent />
+      </LanguageProvider>
+    </ThemeProvider>
   );
 }

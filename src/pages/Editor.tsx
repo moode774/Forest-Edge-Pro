@@ -218,42 +218,42 @@ export default function Editor() {
     // --- Helper for "Architect" Inputs ---
     const InputField = ({ label, value, onChange, placeholder, type = "text" }: any) => (
         <div className="group">
-            <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1 group-focus-within:text-black transition-colors">{label}</label>
+            <label className="block text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1 group-focus-within:text-black dark:group-focus-within:text-white transition-colors">{label}</label>
             <input
                 type={type}
                 value={value}
                 onChange={onChange}
                 placeholder={placeholder}
-                className={`w-full bg-transparent border-b border-gray-200 py-2 text-sm text-[#1c1917] font-medium placeholder-gray-300 focus:outline-none focus:border-[#1c1917] transition-all rounded-none ${isRTL ? 'text-right' : 'text-left'}`}
+                className={`w-full bg-transparent border-b border-gray-200 dark:border-gray-700 py-2 text-sm text-[#1c1917] dark:text-white font-medium placeholder-gray-300 dark:placeholder-gray-600 focus:outline-none focus:border-[#1c1917] dark:focus:border-white transition-all rounded-none ${isRTL ? 'text-right' : 'text-left'}`}
             />
         </div>
     );
 
     return (
-        <div className={`flex flex-col lg:flex-row h-screen overflow-hidden bg-[#e5e5e5] font-sans text-[#1c1917] ${isRTL ? 'rtl' : 'ltr'}`} dir={isRTL ? 'rtl' : 'ltr'}>
+        <div className={`flex flex-col lg:flex-row h-screen overflow-hidden bg-[#e5e5e5] dark:bg-[#0f0f0f] font-sans text-[#1c1917] dark:text-white transition-colors ${isRTL ? 'rtl' : 'ltr'}`} dir={isRTL ? 'rtl' : 'ltr'}>
 
             {/* --- LEFT PANEL: The "Forest Edge" Editor --- */}
-            <div className={`w-full lg:w-4/12 h-full flex flex-col bg-[#FDFDFB] border-r border-gray-200 shadow-2xl z-20 no-print`}>
+            <div className={`w-full lg:w-4/12 h-full flex flex-col bg-[#FDFDFB] dark:bg-[#1c1917] border-r border-gray-200 dark:border-gray-800 shadow-2xl z-20 no-print transition-colors`}>
 
                 {/* Header */}
-                <div className="h-20 flex items-center justify-between px-6 border-b border-gray-100 bg-[#FDFDFB]">
+                <div className="h-20 flex items-center justify-between px-6 border-b border-gray-100 dark:border-gray-800 bg-[#FDFDFB] dark:bg-[#1c1917] transition-colors">
                     <div className="flex items-center gap-4">
-                        <button onClick={() => navigate('/home')} className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:border-black hover:text-black transition-all">
+                        <button onClick={() => navigate('/home')} className="w-10 h-10 rounded-full border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-400 hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white transition-all">
                             <ArrowLeft size={18} />
                         </button>
                         <div>
-                            <h1 className="font-serif text-lg font-bold text-[#1c1917]">Editor</h1>
+                            <h1 className="font-serif text-lg font-bold text-[#1c1917] dark:text-white">{t('editor.title', 'Editor')}</h1>
                             <div className="flex items-center gap-2">
                                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                                <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Live System</p>
+                                <p className="text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">{t('editor.liveSystem', 'Live System')}</p>
                             </div>
                         </div>
                     </div>
                     <div className="flex gap-2">
-                        <button onClick={handleSave} disabled={saving} className="w-10 h-10 rounded-lg bg-[#1c1917] text-white flex items-center justify-center hover:bg-black transition-all disabled:opacity-50">
+                        <button onClick={handleSave} disabled={saving} className="w-10 h-10 rounded-lg bg-[#1c1917] dark:bg-white text-white dark:text-[#1c1917] flex items-center justify-center hover:bg-black dark:hover:bg-gray-200 transition-all disabled:opacity-50">
                             {saving ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Save size={18} />}
                         </button>
-                        <button onClick={handlePrint} className="w-10 h-10 rounded-lg border border-gray-200 text-gray-600 flex items-center justify-center hover:bg-gray-50 transition-all">
+                        <button onClick={handlePrint} className="w-10 h-10 rounded-lg border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-800 transition-all">
                             <Printer size={18} />
                         </button>
                     </div>
@@ -263,16 +263,16 @@ export default function Editor() {
                 <div className="flex-1 overflow-y-auto p-6 space-y-8">
 
                     {/* Space Monitor */}
-                    <div className={`p-4 rounded-xl border ${pageMetrics.canFitImages ? 'bg-gray-50 border-gray-200' : 'bg-red-50 border-red-200'}`}>
+                    <div className={`p-4 rounded-xl border ${pageMetrics.canFitImages ? 'bg-gray-50 dark:bg-gray-800/50 border-gray-200 dark:border-gray-700' : 'bg-red-50 dark:bg-red-900/10 border-red-200 dark:border-red-900'} transition-colors`}>
                         <div className="flex justify-between items-center mb-2">
-                            <span className="text-[10px] font-bold uppercase tracking-widest text-gray-500">Page Capacity</span>
-                            <span className={`text-[10px] font-bold uppercase ${pageMetrics.canFitImages ? 'text-emerald-600' : 'text-red-600'}`}>
-                                {pageMetrics.canFitImages ? 'Optimal' : 'Overload'}
+                            <span className="text-[10px] font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400">{t('editor.pageCapacity', 'Page Capacity')}</span>
+                            <span className={`text-[10px] font-bold uppercase ${pageMetrics.canFitImages ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}>
+                                {pageMetrics.canFitImages ? t('editor.optimal', 'Optimal') : t('editor.overload', 'Overload')}
                             </span>
                         </div>
-                        <div className="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                        <div className="w-full h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                             <div
-                                className={`h-full transition-all duration-500 ${pageMetrics.canFitImages ? 'bg-[#1c1917]' : 'bg-red-500'}`}
+                                className={`h-full transition-all duration-500 ${pageMetrics.canFitImages ? 'bg-[#1c1917] dark:bg-emerald-500' : 'bg-red-500'}`}
                                 style={{ width: `${Math.min(100, (pageMetrics.contentHeight / pageMetrics.availableHeight) * 100)}%` }}
                             />
                         </div>
@@ -281,8 +281,8 @@ export default function Editor() {
                     {/* Section 1: Core Data */}
                     <div className="space-y-4 animate-fade-in-up">
                         <div className="flex items-center gap-2 mb-2">
-                            <div className="w-1 h-3 bg-[#1c1917]"></div>
-                            <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500">Document Specs</h3>
+                            <div className="w-1 h-3 bg-[#1c1917] dark:bg-white"></div>
+                            <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400">{t('editor.documentSpecs', 'Document Specs')}</h3>
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             <InputField
@@ -306,15 +306,15 @@ export default function Editor() {
                         />
                         <div className="grid grid-cols-2 gap-4">
                             <div className="group">
-                                <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Priority</label>
+                                <label className="block text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1">{t('editor.priority', 'Priority')}</label>
                                 <select
                                     value={data.priority}
                                     onChange={(e) => setData({ ...data, priority: e.target.value })}
-                                    className="w-full bg-transparent border-b border-gray-200 py-2 text-sm font-medium focus:outline-none focus:border-black rounded-none appearance-none"
+                                    className="w-full bg-transparent border-b border-gray-200 dark:border-gray-700 py-2 text-sm font-medium text-[#1c1917] dark:text-white focus:outline-none focus:border-black dark:focus:border-white rounded-none appearance-none"
                                 >
-                                    <option>Low</option>
-                                    <option>Medium</option>
-                                    <option>High</option>
+                                    <option className="text-black">{t('common.low', 'Low')}</option>
+                                    <option className="text-black">{t('common.medium', 'Medium')}</option>
+                                    <option className="text-black">{t('common.high', 'High')}</option>
                                 </select>
                             </div>
                             <InputField
@@ -330,46 +330,46 @@ export default function Editor() {
                     <div className="space-y-4">
                         <div className="flex items-center justify-between mb-2">
                             <div className="flex items-center gap-2">
-                                <div className="w-1 h-3 bg-[#1c1917]"></div>
-                                <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500">Line Items</h3>
+                                <div className="w-1 h-3 bg-[#1c1917] dark:bg-white"></div>
+                                <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400">{t('editor.lineItems', 'Line Items')}</h3>
                             </div>
-                            <button onClick={addLineItem} className="text-[10px] font-bold uppercase bg-gray-100 hover:bg-[#1c1917] hover:text-white px-3 py-1 rounded transition-colors">
-                                + Add Item
+                            <button onClick={addLineItem} className="text-[10px] font-bold uppercase bg-gray-100 dark:bg-gray-800 hover:bg-[#1c1917] dark:hover:bg-white hover:text-white dark:hover:text-[#1c1917] px-3 py-1 rounded transition-colors text-[#1c1917] dark:text-white">
+                                {t('editor.addItem', '+ Add Item')}
                             </button>
                         </div>
 
                         <div className="space-y-3">
                             {data.lineItems.map((item, idx) => (
-                                <div key={item.id} className="bg-white border border-gray-100 p-4 rounded-xl shadow-sm hover:border-gray-300 transition-all group relative">
-                                    <button onClick={() => removeLineItem(item.id)} className="absolute top-2 right-2 text-gray-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all">
+                                <div key={item.id} className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 p-4 rounded-xl shadow-sm hover:border-gray-300 dark:hover:border-gray-600 transition-all group relative">
+                                    <button onClick={() => removeLineItem(item.id)} className="absolute top-2 right-2 text-gray-300 dark:text-gray-600 hover:text-red-500 dark:hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all">
                                         <Trash2 size={14} />
                                     </button>
                                     <div className="mb-3">
-                                        <label className="text-[8px] font-bold uppercase text-gray-400">Product Name / Description</label>
+                                        <label className="text-[8px] font-bold uppercase text-gray-400 dark:text-gray-500">{t('editor.productName', 'Product Name / Description')}</label>
                                         <input
                                             value={item.description}
                                             onChange={(e) => updateLineItem(item.id, 'description', e.target.value)}
-                                            className="w-full border-b border-gray-100 text-sm focus:border-black focus:outline-none"
+                                            className="w-full bg-transparent border-b border-gray-100 dark:border-gray-700 text-sm focus:border-black dark:focus:border-white focus:outline-none text-[#1c1917] dark:text-white"
                                             placeholder="Enter product name and description..."
                                         />
                                     </div>
 
                                     <div className="grid grid-cols-3 gap-3 mb-3">
                                         <div>
-                                            <label className="text-[8px] font-bold uppercase text-gray-400">Model / Code</label>
+                                            <label className="text-[8px] font-bold uppercase text-gray-400 dark:text-gray-500">{t('editor.model', 'Model / Code')}</label>
                                             <input
                                                 value={item.model || ''}
                                                 onChange={(e) => updateLineItem(item.id, 'model', e.target.value)}
-                                                className="w-full border-b border-gray-100 text-sm focus:border-black focus:outline-none"
+                                                className="w-full bg-transparent border-b border-gray-100 dark:border-gray-700 text-sm focus:border-black dark:focus:border-white focus:outline-none text-[#1c1917] dark:text-white"
                                                 placeholder="e.g., 4410"
                                             />
                                         </div>
                                         <div>
-                                            <label className="text-[8px] font-bold uppercase text-gray-400">Color</label>
+                                            <label className="text-[8px] font-bold uppercase text-gray-400 dark:text-gray-500">{t('editor.color', 'Color')}</label>
                                             <input
                                                 value={item.color || ''}
                                                 onChange={(e) => updateLineItem(item.id, 'color', e.target.value)}
-                                                className="w-full border-b border-gray-100 text-sm focus:border-black focus:outline-none"
+                                                className="w-full bg-transparent border-b border-gray-100 dark:border-gray-700 text-sm focus:border-black dark:focus:border-white focus:outline-none text-[#1c1917] dark:text-white"
                                                 placeholder="e.g., Oak, Walnut"
                                             />
                                         </div>
@@ -390,29 +390,29 @@ export default function Editor() {
                                                 return (
                                                     <>
                                                         <div className="flex-1">
-                                                            <label className="text-[8px] font-bold uppercase text-gray-400">W</label>
+                                                            <label className="text-[8px] font-bold uppercase text-gray-400 dark:text-gray-500">W</label>
                                                             <input
                                                                 value={w}
                                                                 onChange={(e) => updateDims(e.target.value, d, h)}
-                                                                className="w-full border-b border-gray-100 text-sm focus:border-black focus:outline-none text-center"
+                                                                className="w-full bg-transparent border-b border-gray-100 dark:border-gray-700 text-sm focus:border-black dark:focus:border-white focus:outline-none text-center text-[#1c1917] dark:text-white"
                                                                 placeholder="W"
                                                             />
                                                         </div>
                                                         <div className="flex-1">
-                                                            <label className="text-[8px] font-bold uppercase text-gray-400">D</label>
+                                                            <label className="text-[8px] font-bold uppercase text-gray-400 dark:text-gray-500">D</label>
                                                             <input
                                                                 value={d}
                                                                 onChange={(e) => updateDims(w, e.target.value, h)}
-                                                                className="w-full border-b border-gray-100 text-sm focus:border-black focus:outline-none text-center"
+                                                                className="w-full bg-transparent border-b border-gray-100 dark:border-gray-700 text-sm focus:border-black dark:focus:border-white focus:outline-none text-center text-[#1c1917] dark:text-white"
                                                                 placeholder="D"
                                                             />
                                                         </div>
                                                         <div className="flex-1">
-                                                            <label className="text-[8px] font-bold uppercase text-gray-400">H</label>
+                                                            <label className="text-[8px] font-bold uppercase text-gray-400 dark:text-gray-500">H</label>
                                                             <input
                                                                 value={h}
                                                                 onChange={(e) => updateDims(w, d, e.target.value)}
-                                                                className="w-full border-b border-gray-100 text-sm focus:border-black focus:outline-none text-center"
+                                                                className="w-full bg-transparent border-b border-gray-100 dark:border-gray-700 text-sm focus:border-black dark:focus:border-white focus:outline-none text-center text-[#1c1917] dark:text-white"
                                                                 placeholder="H"
                                                             />
                                                         </div>
@@ -424,20 +424,20 @@ export default function Editor() {
 
                                     <div className="grid grid-cols-2 gap-3 mb-3">
                                         <div>
-                                            <label className="text-[8px] font-bold uppercase text-gray-400">Quantity</label>
+                                            <label className="text-[8px] font-bold uppercase text-gray-400 dark:text-gray-500">{t('editor.qty', 'Quantity')}</label>
                                             <input
                                                 type="number"
                                                 value={item.copies}
                                                 onChange={(e) => updateLineItem(item.id, 'copies', parseFloat(e.target.value) || 0)}
-                                                className="w-full border-b border-gray-100 text-sm focus:border-black focus:outline-none"
+                                                className="w-full bg-transparent border-b border-gray-100 dark:border-gray-700 text-sm focus:border-black dark:focus:border-white focus:outline-none text-[#1c1917] dark:text-white"
                                             />
                                         </div>
                                         <div>
-                                            <label className="text-[8px] font-bold uppercase text-gray-400">Notes</label>
+                                            <label className="text-[8px] font-bold uppercase text-gray-400 dark:text-gray-500">{t('editor.notes', 'Notes')}</label>
                                             <input
                                                 value={item.comments || ''}
                                                 onChange={(e) => updateLineItem(item.id, 'comments', e.target.value)}
-                                                className="w-full border-b border-gray-100 text-sm focus:border-black focus:outline-none"
+                                                className="w-full bg-transparent border-b border-gray-100 dark:border-gray-700 text-sm focus:border-black dark:focus:border-white focus:outline-none text-[#1c1917] dark:text-white"
                                                 placeholder="Simple notes..."
                                             />
                                         </div>
@@ -447,30 +447,37 @@ export default function Editor() {
                                     <div className="flex items-center gap-2">
                                         <button
                                             onClick={() => setShowVeneerModal(item.id)}
-                                            className="flex items-center gap-2 px-3 py-1.5 bg-gray-50 rounded-lg border border-gray-200 hover:border-black transition-colors"
+                                            className="flex items-center gap-2 px-3 py-1.5 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-black dark:hover:border-white transition-colors"
                                         >
-                                            <Palette size={14} className="text-gray-500" />
+                                            <Palette size={14} className="text-gray-500 dark:text-gray-400" />
                                             {item.veneer ? (
                                                 <div className="flex items-center gap-2">
                                                     <img src={item.veneer.imageUrl} className="w-5 h-5 rounded-full object-cover" />
-                                                    <span className="text-xs font-bold text-[#1c1917]">{item.veneer.name}</span>
+                                                    <span className="text-xs font-bold text-[#1c1917] dark:text-white">{item.veneer.name}</span>
                                                 </div>
                                             ) : (
-                                                <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Select Material</span>
+                                                <span className="text-xs font-bold text-gray-400 dark:text-gray-400 uppercase tracking-wider">{t('editor.selectVeneer', 'Select Veneer')}</span>
                                             )}
                                             <ChevronDown size={12} className="text-gray-400" />
                                         </button>
 
-                                        {item.glossiness && (
-                                            <div className="px-2 py-1 bg-gray-100 rounded text-[10px] uppercase font-bold text-gray-500">
-                                                {item.glossiness}
-                                            </div>
-                                        )}
+                                        <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+                                            <span className="text-[10px] font-bold text-gray-400 dark:text-gray-400 uppercase">{t('editor.gloss', 'Gloss %')}</span>
+                                            <input
+                                                type="number"
+                                                min="0"
+                                                max="100"
+                                                value={item.glossiness || ''}
+                                                onChange={(e) => updateLineItem(item.id, 'glossiness', e.target.value)}
+                                                className="w-12 bg-transparent text-xs font-bold text-[#1c1917] dark:text-white focus:outline-none border-b border-transparent focus:border-black dark:focus:border-white text-center"
+                                                placeholder="0-100"
+                                            />
+                                        </div>
                                     </div>
 
                                     {/* Product Images */}
                                     <div className="mt-3">
-                                        <label className="text-[8px] font-bold uppercase text-gray-400 mb-2 block">Product Images</label>
+                                        <label className="text-[8px] font-bold uppercase text-gray-400 dark:text-gray-500 mb-2 block">{t('editor.productImages', 'Product Images')}</label>
                                         <div className="flex gap-2 flex-wrap">
                                             {item.itemImages && item.itemImages.map((img, imgIdx) => (
                                                 <div key={imgIdx} className="relative w-16 h-16 rounded border border-gray-200 overflow-hidden group">
@@ -488,7 +495,7 @@ export default function Editor() {
                                                 </div>
                                             ))}
                                             {(!item.itemImages || item.itemImages.length < 4) && (
-                                                <label className="w-16 h-16 rounded border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer hover:border-black transition-colors">
+                                                <label className="w-16 h-16 rounded border-2 border-dashed border-gray-300 dark:border-gray-600 flex items-center justify-center cursor-pointer hover:border-black dark:hover:border-white transition-colors">
                                                     <Upload size={16} className="text-gray-400" />
                                                     <input
                                                         type="file"
@@ -541,13 +548,13 @@ export default function Editor() {
                     {/* Section 3: Attachments */}
                     <div className="space-y-4">
                         <div className="flex items-center gap-2 mb-2">
-                            <div className="w-1 h-3 bg-[#1c1917]"></div>
-                            <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500">Visual Evidence</h3>
+                            <div className="w-1 h-3 bg-[#1c1917] dark:bg-white"></div>
+                            <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400">{t('editor.visualEvidence', 'Visual Evidence')}</h3>
                         </div>
 
                         <div className="grid grid-cols-3 gap-2">
                             {data.images.map((img, i) => (
-                                <div key={i} className="aspect-square bg-gray-50 rounded-lg border border-gray-200 relative group overflow-hidden">
+                                <div key={i} className="aspect-square bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 relative group overflow-hidden">
                                     <img src={img} className="w-full h-full object-cover" />
                                     <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                                         <button onClick={() => removeImage(i)} className="text-white hover:text-red-400">
@@ -559,10 +566,10 @@ export default function Editor() {
                             {data.images.length < 6 && (
                                 <button
                                     onClick={() => fileInputRef.current?.click()}
-                                    className="aspect-square bg-white border border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center text-gray-400 hover:border-black hover:text-black hover:bg-gray-50 transition-all"
+                                    className="aspect-square bg-white dark:bg-gray-800 border border-dashed border-gray-300 dark:border-gray-600 rounded-lg flex flex-col items-center justify-center text-gray-400 hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-all"
                                 >
                                     <Upload size={20} className="mb-1" />
-                                    <span className="text-[9px] uppercase font-bold">Upload</span>
+                                    <span className="text-[9px] uppercase font-bold">{t('common.upload', 'Upload')}</span>
                                 </button>
                             )}
                         </div>
@@ -571,12 +578,12 @@ export default function Editor() {
 
                     {/* Section 4: Remarks */}
                     <div className="space-y-2">
-                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Remarks / Notes</label>
+                        <label className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">{t('editor.remarks', 'Remarks / Notes')}</label>
                         <textarea
                             value={data.remarks}
                             onChange={(e) => setData({ ...data, remarks: e.target.value })}
                             rows={3}
-                            className="w-full bg-transparent border border-gray-200 rounded-lg p-3 text-sm focus:border-black focus:outline-none resize-none"
+                            className="w-full bg-transparent border border-gray-200 dark:border-gray-700 rounded-lg p-3 text-sm focus:border-black dark:focus:border-white focus:outline-none resize-none text-[#1c1917] dark:text-white"
                             placeholder="Add additional comments here..."
                         />
                     </div>
@@ -653,19 +660,14 @@ export default function Editor() {
 
                                 {/* TABLE */}
                                 <div className="flex-1">
-                                    <table className="w-full border-collapse border border-black text-xs">
-                                        <thead>
-                                            <tr>
-                                                <th className="bg-[#404040] border-r border-gray-500 px-4 py-3 font-bold text-white text-left text-sm uppercase tracking-wider">Name</th>
-                                                <th className="bg-[#404040] px-2 py-3 font-bold text-white w-24 text-center text-sm uppercase tracking-wider">Qty</th>
-                                            </tr>
-                                        </thead>
+                                    <table className="w-full border-collapse text-xs">
+
                                         <tbody>
                                             {pageItems.map(item => (
-                                                <tr key={item.id} className="border-b border-black">
-                                                    <td className="border-r border-black p-0 align-top">
+                                                <tr key={item.id} className="border-b border-gray-200">
+                                                    <td className="border-r border-gray-200 p-0 align-top">
                                                         {/* Top Strip: Name */}
-                                                        <div className="bg-gray-100 px-4 py-2 border-b border-gray-300">
+                                                        <div className="bg-gray-100 px-4 py-2">
                                                             <div className="font-bold text-sm text-[#1c1917] uppercase tracking-wide">{item.description}</div>
                                                         </div>
 
@@ -721,7 +723,7 @@ export default function Editor() {
                                                             )}
                                                             {item.glossiness && (
                                                                 <div className="px-3 py-1 bg-gray-100 rounded text-[10px] font-bold text-black border border-gray-200">
-                                                                    Glossiness: {item.glossiness}
+                                                                    Glossiness: {item.glossiness}%
                                                                 </div>
                                                             )}
                                                             {item.comments && (
@@ -733,7 +735,7 @@ export default function Editor() {
                                                     </td>
                                                     <td className="p-0 text-center align-top">
                                                         {/* Top Strip: Qty */}
-                                                        <div className="bg-gray-100 py-2 border-b border-gray-300 h-[37px] flex items-center justify-center">
+                                                        <div className="bg-gray-100 py-2 h-[37px] flex items-center justify-center">
                                                             <div className="font-bold text-sm text-[#1c1917]">{item.copies}</div>
                                                         </div>
                                                         {/* Bottom Area: Empty to match height */}
@@ -787,30 +789,28 @@ export default function Editor() {
                 showVeneerModal && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
                         <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setShowVeneerModal(null)}></div>
-                        <div className="relative bg-white rounded-2xl w-full max-w-4xl max-h-[85vh] overflow-hidden flex flex-col shadow-2xl animate-fade-in-up">
-                            <div className="p-6 border-b border-gray-100 flex justify-between items-center">
-                                <h2 className="font-serif text-2xl font-bold">Select Material Finish</h2>
-                                <button onClick={() => setShowVeneerModal(null)}><X size={24} className="text-gray-400 hover:text-black" /></button>
+                        <div className="relative bg-white dark:bg-gray-900 rounded-2xl w-full max-w-4xl max-h-[85vh] overflow-hidden flex flex-col shadow-2xl animate-fade-in-up">
+                            <div className="p-6 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center">
+                                <h2 className="font-serif text-2xl font-bold text-[#1c1917] dark:text-white">{t('editor.selectMaterial', 'Select Material Finish')}</h2>
+                                <button onClick={() => setShowVeneerModal(null)}><X size={24} className="text-gray-400 hover:text-black dark:hover:text-white" /></button>
                             </div>
 
-                            <div className="flex-1 overflow-y-auto p-6 bg-gray-50">
+                            <div className="flex-1 overflow-y-auto p-6 bg-gray-50 dark:bg-black/50">
                                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                                     {veneers.map(v => (
                                         <div
                                             key={v.id}
                                             onClick={() => {
                                                 updateLineItem(showVeneerModal, 'veneer', v);
-                                                // Don't close yet, let them pick glossiness? Or maybe auto-close?
-                                                // Let's keep open for glossiness selection.
                                             }}
-                                            className={`cursor-pointer rounded-xl border-2 overflow-hidden transition-all relative group h-48 ${data.lineItems.find(i => i.id === showVeneerModal)?.veneer?.id === v.id ? 'border-[#1c1917] ring-2 ring-[#1c1917]/20 scale-[1.02]' : 'border-transparent hover:border-gray-300 bg-white'}`}
+                                            className={`cursor-pointer rounded-xl border-2 overflow-hidden transition-all relative group h-48 ${data.lineItems.find(i => i.id === showVeneerModal)?.veneer?.id === v.id ? 'border-[#1c1917] dark:border-white ring-2 ring-[#1c1917]/20 dark:ring-white/20 scale-[1.02]' : 'border-transparent hover:border-gray-300 dark:hover:border-gray-600 bg-white dark:bg-gray-800'}`}
                                         >
                                             <img src={v.imageUrl} className="w-full h-32 object-cover" />
                                             <div className="p-3">
-                                                <p className="font-bold text-sm text-[#1c1917]">{v.name}</p>
+                                                <p className="font-bold text-sm text-[#1c1917] dark:text-white">{v.name}</p>
                                             </div>
                                             {data.lineItems.find(i => i.id === showVeneerModal)?.veneer?.id === v.id && (
-                                                <div className="absolute top-2 right-2 w-6 h-6 bg-[#1c1917] text-white rounded-full flex items-center justify-center">
+                                                <div className="absolute top-2 right-2 w-6 h-6 bg-[#1c1917] dark:bg-white text-white dark:text-[#1c1917] rounded-full flex items-center justify-center">
                                                     <Check size={14} />
                                                 </div>
                                             )}
@@ -819,27 +819,15 @@ export default function Editor() {
                                 </div>
 
                                 <div className="mt-8">
-                                    <h3 className="text-sm font-bold uppercase tracking-widest text-gray-500 mb-4">Select Glossiness Level</h3>
-                                    <div className="flex gap-4">
-                                        {['Matte', 'Semi-Gloss', 'High-Gloss'].map(gloss => (
-                                            <button
-                                                key={gloss}
-                                                onClick={() => updateLineItem(showVeneerModal, 'glossiness', gloss)}
-                                                className={`px-6 py-3 rounded-xl border text-sm font-bold uppercase tracking-wide transition-all ${data.lineItems.find(i => i.id === showVeneerModal)?.glossiness === gloss ? 'bg-[#1c1917] text-white border-[#1c1917]' : 'bg-white border-gray-200 text-gray-500 hover:border-gray-400'}`}
-                                            >
-                                                {gloss}
-                                            </button>
-                                        ))}
-                                    </div>
                                 </div>
                             </div>
 
-                            <div className="p-6 border-t border-gray-100 bg-white flex justify-end">
+                            <div className="p-6 border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 flex justify-end">
                                 <button
                                     onClick={() => setShowVeneerModal(null)}
-                                    className="bg-[#1c1917] text-white px-8 py-3 rounded-xl font-bold uppercase tracking-widest hover:bg-black transition-all"
+                                    className="bg-[#1c1917] dark:bg-white text-white dark:text-[#1c1917] px-8 py-3 rounded-xl font-bold uppercase tracking-widest hover:bg-black dark:hover:bg-gray-200 transition-all"
                                 >
-                                    Confirm Selection
+                                    {t('editor.confirmSelection', 'Confirm Selection')}
                                 </button>
                             </div>
                         </div>
