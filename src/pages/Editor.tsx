@@ -53,6 +53,8 @@ export interface SubmittalData {
     date: string;
     updatedAt: string;
     logo: string;
+    clientPhone: string;
+    createdBy: string;
     lineItems: LineItem[];
     images: string[];
     remarks: string;
@@ -70,6 +72,8 @@ const INITIAL_DATA: SubmittalData = {
     date: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     logo: '',
+    clientPhone: '',
+    createdBy: '',
     lineItems: [],
     images: [],
     remarks: ''
@@ -285,26 +289,50 @@ export default function Editor() {
                 {/* 1. Project Information Card (Simplified) */}
                 <Card className="print:hidden">
                     <SectionHeader title="RFQ - Request" icon={Hash} />
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {/* Row 1 */}
                         <div>
-                            <Label>Request No</Label>
+                            <Label>Order Number</Label>
                             <StyledInput
-                                value={data.submittalNo || (() => {
-                                    const newId = 'RFQ-001';
-                                    if (!data.submittalNo) setTimeout(() => setData(prev => ({ ...prev, submittalNo: newId })), 0);
-                                    return newId;
-                                })()}
-                                readOnly
-                                className="font-mono text-lg tracking-wider bg-gray-100 dark:bg-gray-800 text-gray-500 cursor-not-allowed"
+                                value={data.submittalNo}
+                                onChange={(e: any) => setData({ ...data, submittalNo: e.target.value })}
+                                placeholder="Order #"
+                                className="font-mono text-lg font-bold"
                             />
                         </div>
                         <div>
-                            <Label>Submission Date</Label>
+                            <Label>Order By (Name)</Label>
+                            <StyledInput
+                                value={data.createdBy}
+                                onChange={(e: any) => setData({ ...data, createdBy: e.target.value })}
+                                placeholder="Your Name"
+                            />
+                        </div>
+                        <div>
+                            <Label>Order Date</Label>
                             <StyledInput
                                 type="date"
                                 value={data.dueDate}
                                 onChange={(e: any) => setData({ ...data, dueDate: e.target.value })}
-                                className="text-lg"
+                            />
+                        </div>
+
+                        {/* Row 2 */}
+                        <div className="md:col-span-1">
+                            <Label>Client Name</Label>
+                            <StyledInput
+                                value={data.contractorName}
+                                onChange={(e: any) => setData({ ...data, contractorName: e.target.value })}
+                                placeholder="Client / Company Name"
+                            />
+                        </div>
+                        <div className="md:col-span-1">
+                            <Label>Client Phone</Label>
+                            <StyledInput
+                                type="tel"
+                                value={data.clientPhone}
+                                onChange={(e: any) => setData({ ...data, clientPhone: e.target.value })}
+                                placeholder="055 555 5555"
                             />
                         </div>
                     </div>
@@ -367,8 +395,16 @@ export default function Editor() {
                                             <StyledInput type="number" value={item.copies} onChange={(e: any) => updateLineItem(item.id, 'copies', e.target.value)} className="text-center font-bold" />
                                         </div>
                                         <div className="col-span-1">
-                                            <Label>Model Code</Label>
+                                            <Label>Model Ref</Label>
                                             <StyledInput value={item.model} onChange={(e: any) => updateLineItem(item.id, 'model', e.target.value)} />
+                                        </div>
+                                        <div className="col-span-1">
+                                            <Label>Code</Label>
+                                            <StyledInput value={item.barcode} onChange={(e: any) => updateLineItem(item.id, 'barcode', e.target.value)} />
+                                        </div>
+                                        <div className="col-span-1">
+                                            <Label>Color</Label>
+                                            <StyledInput value={item.color} onChange={(e: any) => updateLineItem(item.id, 'color', e.target.value)} />
                                         </div>
                                         <div className="col-span-2">
                                             <Label>Dimensions (WxDxH)</Label>
@@ -530,7 +566,7 @@ export default function Editor() {
 
             {/* --- Print Template (Separate Component) --- */}
             {/* --- Print Template (Separate Component) --- */}
-            <PrintTemplate data={data} className={showPreview ? 'block fixed inset-0 z-50 overflow-y-auto' : 'hidden'} />
+            <PrintTemplate data={data} className={`${showPreview ? 'block fixed inset-0 z-50 overflow-y-auto' : 'hidden'} print:block print:static print:z-[9999]`} />
 
         </div>
     );
